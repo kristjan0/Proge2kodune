@@ -1,2 +1,1 @@
-Progaming kodused tööd# Proge2kodune
-# Proge2kodune
+See on meie vinge QR Koodi generaator, millel saab vahetada nii qr koodi v2rvi kui ka tausta v2rvi
