@@ -31,6 +31,9 @@ def generate_qr_code(data, fill_color, back_color):
             if data[x, y] == 0:
                 colored_img.putpixel((x, y), fill_color)
 
+    # Scale the image
+    colored_img = colored_img.resize((400, 400))
+
     return colored_img
 
 def next_question():
