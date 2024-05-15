@@ -4,11 +4,17 @@ import tkinter as tk
 
 # Värvide sõnastik, mis seob värvinimed RGB väärtustega
 color_dict = {
-    'red': (255, 0, 0),
-    'green': (0, 255, 0),
-    'blue': (0, 0, 255),
-    'black': (0, 0, 0),
-    'white': (255, 255, 255),
+    'punane': (255, 0, 0),
+    'roheline': (0, 255, 0),
+    'sinine': (0, 0, 255),
+    'must': (0, 0, 0),
+    'valge': (255, 255, 255),
+    'roosa' : (255, 192, 203),
+    'kollane' : (255, 255, 0),
+    'oranž' : (255, 165, 0),
+    'lilla' : (128, 0, 128),
+    'pruun' : (165, 42, 42),
+    'hall' : (128, 128, 128),
     # Lisa siia veel värve
 }
 
@@ -22,7 +28,7 @@ def generate_qr_code(data, fill_color, back_color):
     qr.add_data(data)
     qr.make(fit=True)
 
-    img = qr.make_image(fill='black', back='white')
+    img = qr.make_image(fill='must', back='valge')
     colored_img = Image.new('RGB', img.size, back_color)
     data = img.load()
 
@@ -30,9 +36,6 @@ def generate_qr_code(data, fill_color, back_color):
         for x in range(img.size[0]):
             if data[x, y] == 0:
                 colored_img.putpixel((x, y), fill_color)
-
-    # Scale the image
-    colored_img = colored_img.resize((400, 400))
 
     return colored_img
 
@@ -43,7 +46,7 @@ def next_question():
         question_label.config(text="Vali QR koodi värv")
         for color in color_dict.keys():
             tk.Radiobutton(window, text=color, variable=fill_color_var, value=color).pack()
-        fill_color_var.set('black')
+        fill_color_var.set('must')
     elif question_label['text'] == "Vali QR koodi värv":
         for widget in window.winfo_children():
             if isinstance(widget, tk.Radiobutton):
@@ -52,7 +55,7 @@ def next_question():
         question_label.config(text="Vali taustavärv")
         for color in color_dict.keys():
             tk.Radiobutton(window, text=color, variable=back_color_var, value=color).pack()
-        back_color_var.set('white')
+        back_color_var.set('valge')
     else:
         next_button.pack_forget()
         for widget in window.winfo_children():
@@ -66,7 +69,11 @@ def display_qr_code():
     fill_color = color_dict[fill_color_var.get()]
     back_color = color_dict[back_color_var.get()]
     img = generate_qr_code(data, fill_color, back_color)
-    tk_img = ImageTk.PhotoImage(img)
+    
+    max_size = (500, 500) # Pildi maksimaalsed mõõtmed
+    img.thumbnail(max_size) 
+
+    tk_img = ImageTk.PhotoImage(img) 
     label.config(image=tk_img)
     label.image = tk_img
     caption_label = tk.Label(window, text="Siin on sinu QR kood")
