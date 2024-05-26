@@ -1,1 +1,1 @@
-[20] https://leetcode.com/problems/valid-parentheses/
+[1512] https://leetcode.com/problems/number-of-good-pairs/
